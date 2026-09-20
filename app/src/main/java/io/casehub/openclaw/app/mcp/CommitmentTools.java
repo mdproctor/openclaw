@@ -23,8 +23,6 @@ import io.casehub.qhorus.runtime.message.CommitmentService;
 import io.casehub.qhorus.api.message.Message;
 import io.casehub.qhorus.runtime.message.MessageService;
 import io.casehub.qhorus.api.store.CommitmentStore;
-import io.quarkiverse.mcp.server.Tool;
-import io.quarkiverse.mcp.server.ToolArg;
 import io.quarkiverse.mcp.server.ToolResponse;
 
 /**
@@ -69,7 +67,8 @@ public class CommitmentTools {
 
     // ---- casehub_commit ----
 
-    @Tool(description = "Register a CaseHub commitment and arm a Watchdog. "
+    // @McpDomain covers MCP registration — see OpenClawCommitmentApi
+    // @Tool(description = "Register a CaseHub commitment and arm a Watchdog. "
             + "For case steps, commitmentId is provided in the COMMAND message — call casehub_done directly "
             + "when complete without calling this tool first. "
             + "Call this tool only when you need to send an early STATUS acknowledgment to reset the Watchdog "
@@ -144,7 +143,8 @@ public class CommitmentTools {
 
     // ---- casehub_done ----
 
-    @Tool(description = "Close a CaseHub commitment. Dispatches DONE to the originating Qhorus "
+    // @McpDomain covers MCP registration — see OpenClawCommitmentApi
+    // @Tool(description = "Close a CaseHub commitment. Dispatches DONE to the originating Qhorus "
             + "channel (if channel-backed) or calls CommitmentService.fulfill() directly "
             + "(self-commit). Disarms the Watchdog. Always call this when a task is complete. "
             + "If the action requires human oversight, returns a pending gate response instead of "
@@ -210,7 +210,8 @@ public class CommitmentTools {
 
     // ---- casehub_reject ----
 
-    @Tool(description = "Decline a CaseHub commitment — DECLINE speech act. Use when you cannot "
+    // @McpDomain covers MCP registration — see OpenClawCommitmentApi
+    // @Tool(description = "Decline a CaseHub commitment — DECLINE speech act. Use when you cannot "
             + "complete the task. Reason is required and recorded in the ledger.")
     public ToolResponse reject(
             @ToolArg(description = "Your OpenClaw agentId") String agentId,
@@ -258,7 +259,8 @@ public class CommitmentTools {
 
     // ---- casehub_checkpoint ----
 
-    @Tool(description = "Report progress on a commitment. Dispatches STATUS to the originating "
+    // @McpDomain covers MCP registration — see OpenClawCommitmentApi
+    // @Tool(description = "Report progress on a commitment. Dispatches STATUS to the originating "
             + "channel and resets the Watchdog TTL. Use for long-running tasks to prevent "
             + "false escalation.")
     public ToolResponse checkpoint(
@@ -286,7 +288,8 @@ public class CommitmentTools {
 
     // ---- casehub_escalate ----
 
-    @Tool(description = "Escalate a commitment to a human or named agent. Dispatches HANDOFF "
+    // @McpDomain covers MCP registration — see OpenClawCommitmentApi
+    // @Tool(description = "Escalate a commitment to a human or named agent. Dispatches HANDOFF "
             + "to the originating channel. The Watchdog continues running — the escalation "
             + "target is responsible for resolving the commitment.")
     public ToolResponse escalate(
@@ -325,7 +328,8 @@ public class CommitmentTools {
     // ---- casehub_block ----
 
     @Transactional
-    @Tool(description = "Temporarily block a commitment when an external dependency prevents progress. "
+    // @McpDomain covers MCP registration — see OpenClawCommitmentApi
+    // @Tool(description = "Temporarily block a commitment when an external dependency prevents progress. "
             + "Extends the Watchdog deadline (expiresAt) to prevent premature expiry. "
             + "Call casehub_checkpoint with 'UNBLOCKED: <note>' when the blocker resolves. "
             + "Only the obligor of the commitment may call this tool.")
@@ -382,7 +386,8 @@ public class CommitmentTools {
 
     // ---- casehub_delegate ----
 
-    @Tool(description = "Intentionally transfer a commitment to a named agent or person. "
+    // @McpDomain covers MCP registration — see OpenClawCommitmentApi
+    // @Tool(description = "Intentionally transfer a commitment to a named agent or person. "
             + "Dispatches HANDOFF to the originating channel. The Watchdog continues — "
             + "the delegatee is now responsible for fulfilling the commitment. "
             + "Use when delegating responsibility, NOT when escalating for authority or capability reasons "
