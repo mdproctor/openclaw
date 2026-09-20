@@ -1,0 +1,89 @@
+package io.casehub.openclaw.app.api;
+
+import io.casehub.openclaw.app.api.dto.CommitmentResult;
+import io.casehub.openclaw.app.api.dto.CommitmentStatus;
+import io.casehub.openclaw.app.mcp.CommitmentTools;
+import io.casehub.openclaw.app.mcp.QueryTools;
+import io.casehub.platform.api.mcp.McpDomain;
+import io.casehub.platform.api.mcp.PlatformMutation;
+import io.casehub.platform.api.mcp.PlatformQuery;
+import io.casehub.platform.api.mcp.RestPath;
+import io.quarkiverse.mcp.server.ToolResponse;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@McpDomain(value = "openclaw/commitments", basePath = "/api/openclaw/commitments")
+@ApplicationScoped
+public class OpenClawCommitmentApi {
+
+    @Inject CommitmentTools commitmentTools;
+    @Inject QueryTools queryTools;
+
+    @PlatformMutation("Register a commitment and arm the Watchdog")
+    @RestPath("/commit")
+    public CommitmentResult commit(String agentId, String task, String deadline, String channelId) {
+        ToolResponse r = commitmentTools.commit(agentId, task, deadline, channelId);
+        return toResult(r);
+    }
+
+    @PlatformMutation("Mark a commitment as done")
+    @RestPath("/done")
+    public CommitmentResult done(String agentId, String commitmentId, String outcome) {
+        ToolResponse r = commitmentTools.done(agentId, commitmentId, outcome);
+        return toResult(r);
+    }
+
+    @PlatformMutation("Reject a commitment")
+    @RestPath("/reject")
+    public CommitmentResult reject(String agentId, String commitmentId, String reason) {
+        ToolResponse r = commitmentTools.reject(agentId, commitmentId, reason);
+        return toResult(r);
+    }
+
+    @PlatformMutation("Report progress on a commitment")
+    @RestPath("/checkpoint")
+    public CommitmentResult checkpoint(String agentId, String commitmentId, String note) {
+        ToolResponse r = commitmentTools.checkpoint(agentId, commitmentId, note);
+        return toResult(r);
+    }
+
+    @PlatformMutation("Escalate a commitment to another agent or human")
+    @RestPath("/escalate")
+    public CommitmentResult escalate(String agentId, String commitmentId, String reason, String toAgent) {
+        ToolResponse r = commitmentTools.escalate(agentId, commitmentId, reason, toAgent);
+        return toResult(r);
+    }
+
+    @PlatformMutation("Block a commitment with an extended deadline")
+    @RestPath("/block")
+    public CommitmentResult block(String agentId, String commitmentId, String reason, String blockedUntil) {
+        ToolResponse r = commitmentTools.block(agentId, commitmentId, reason, blockedUntil);
+        return toResult(r);
+    }
+
+    @PlatformMutation("Delegate a commitment to a named agent")
+    @RestPath("/delegate")
+    public CommitmentResult delegate(String agentId, String commitmentId, String reason, String toAgent) {
+        ToolResponse r = commitmentTools.delegate(agentId, commitmentId, reason, toAgent);
+        return toResult(r);
+    }
+
+    @PlatformQuery("Query commitment status")
+    @RestPath("/status")
+    public CommitmentResult status(String agentId, String commitmentId) {
+        ToolResponse r = queryTools.status(agentId, commitmentId);
+        return toResult(r);
+    }
+
+    private static CommitmentResult toResult(ToolResponse r) {
+        String text = r.firstContent().asText().text();
+        boolean ok = !r.isError() && !text.startsWith("ERROR");
+        String id = null;
+        if (text.contains("commitmentId=")) {
+            int start = text.indexOf("commitmentId=") + 13;
+            int end = text.indexOf(" ", start);
+            id = end > start ? text.substring(start, end) : text.substring(start);
+        }
+        return new CommitmentResult(ok, id, text);
+    }
+}

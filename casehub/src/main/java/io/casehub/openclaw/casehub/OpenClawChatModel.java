@@ -41,7 +41,7 @@ public class OpenClawChatModel implements ChatModel {
         String userPromptWithSchema = prependSchema(request, userText);
 
         AgentSessionConfig config = new AgentSessionConfig(
-                systemPrompt, userPromptWithSchema, List.of(), timeout, null);
+                systemPrompt, userPromptWithSchema, List.of(), timeout, null, null);
 
         String responseText = agentProvider.invoke(config)
                 .filter(AgentEvent.TextDelta.class::isInstance)

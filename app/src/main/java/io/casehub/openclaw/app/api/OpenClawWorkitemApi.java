@@ -1,0 +1,39 @@
+package io.casehub.openclaw.app.api;
+
+import io.casehub.openclaw.app.api.dto.WorkitemResult;
+import io.casehub.openclaw.app.mcp.WorkitemTools;
+import io.casehub.platform.api.mcp.McpDomain;
+import io.casehub.platform.api.mcp.PlatformMutation;
+import io.casehub.platform.api.mcp.RestPath;
+import io.quarkiverse.mcp.server.ToolResponse;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+@McpDomain(value = "openclaw/workitems", basePath = "/api/openclaw/workitems")
+@ApplicationScoped
+public class OpenClawWorkitemApi {
+
+    @Inject WorkitemTools workitemTools;
+
+    @PlatformMutation("Create a work item and dispatch it")
+    @RestPath("/create")
+    public WorkitemResult createWorkitem(String agentId, String description,
+                                         String deadline, String assignee, String queueName) {
+        ToolResponse r = workitemTools.createWorkitem(agentId, description, deadline, assignee, queueName);
+        return toResult(r);
+    }
+
+    @PlatformMutation("Route a work item to a named queue")
+    @RestPath("/queue")
+    public WorkitemResult queue(String agentId, String description,
+                                String queueName, String priority) {
+        ToolResponse r = workitemTools.queue(agentId, description, queueName, priority);
+        return toResult(r);
+    }
+
+    private static WorkitemResult toResult(ToolResponse r) {
+        String text = r.firstContent().asText().text();
+        boolean ok = !r.isError() && !text.startsWith("ERROR");
+        return new WorkitemResult(ok, text);
+    }
+}
