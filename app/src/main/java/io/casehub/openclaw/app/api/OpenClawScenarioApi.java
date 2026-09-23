@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@McpDomain(value = "openclaw/scenarios", basePath = "/api/openclaw/scenarios")
+@McpDomain(value = "openclaw/scenarios", app = "openclaw", basePath = "/api/openclaw/scenarios")
 @ApplicationScoped
 public class OpenClawScenarioApi {
 
