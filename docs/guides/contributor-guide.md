@@ -245,7 +245,7 @@ The scenario subsystem provides a demo execution framework for showcasing multi-
 |-------|------|
 | `ScenarioExecutionService` | Orchestrates scenario lifecycle: provisions agents, opens channels, dispatches initial COMMANDs |
 | `ScenarioRestResource` | REST API: `GET /api/scenarios` (list), `GET /api/scenarios/{id}/state` (snapshot), `POST /api/scenarios/{id}/start` (execute), `PUT /api/scenarios/{id}/workitems/{gateId}/complete` (gate resolution) |
-| `ScenarioSseResource` | SSE endpoint for real-time scenario state streaming |
+| `OpenClawScenarioApi.watchEvents()` | `@PlatformStream` SSE for real-time scenario state streaming |
 | `DemoGateClassifier` | `ActionRiskClassifier` implementation for demo scenarios |
 | `ExampleController`, `ExamplePoller`, `ExampleSetup` | Demo scenario wiring and lifecycle |
 

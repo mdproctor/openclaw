@@ -16,6 +16,7 @@ import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import io.casehub.openclaw.casehub.OversightGateService;
+import io.casehub.platform.api.mcp.HandWrittenEndpoint;
 
 /**
  * Receives human responses to oversight gate questions, delivered by OpenClaw
@@ -26,6 +27,7 @@ import io.casehub.openclaw.casehub.OversightGateService;
  * @PermitAll: OpenClaw callbacks carry no casehub OIDC token. See openclaw#41 spec §2.
  */
 @PermitAll
+@HandWrittenEndpoint("delivery callback endpoint")
 @Path("/openclaw/delivery/oversight")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

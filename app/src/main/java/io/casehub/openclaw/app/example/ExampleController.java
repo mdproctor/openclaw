@@ -21,6 +21,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import io.casehub.openclaw.app.OpenClawGroups;
+import io.casehub.platform.api.mcp.HandWrittenEndpoint;
 import io.casehub.openclaw.casehub.OpenClawAgentConfigResolver;
 import io.casehub.qhorus.api.message.CommitmentState;
 import io.smallrye.common.annotation.Blocking;
@@ -40,6 +41,7 @@ import io.smallrye.common.annotation.Blocking;
 @Deprecated(forRemoval = true)
 @RolesAllowed(OpenClawGroups.ADMIN)
 @ApplicationScoped
+@HandWrittenEndpoint("deprecated demo controller")
 @Path("/example")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

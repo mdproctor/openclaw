@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import io.casehub.openclaw.casehub.DirectCallBridge;
+import io.casehub.platform.api.mcp.HandWrittenEndpoint;
 import io.smallrye.common.annotation.Blocking;
 
 import org.jboss.logging.Logger;
@@ -20,6 +21,7 @@ import org.jboss.logging.Logger;
 @PermitAll
 @Blocking
 @ApplicationScoped
+@HandWrittenEndpoint("delivery callback endpoint")
 @Path("/openclaw/direct-call")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

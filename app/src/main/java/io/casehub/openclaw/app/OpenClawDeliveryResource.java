@@ -17,6 +17,7 @@ import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 import io.casehub.openclaw.casehub.OversightGateService;
+import io.casehub.platform.api.mcp.HandWrittenEndpoint;
 import io.casehub.engine.common.qualifier.CrossTenant;
 import io.casehub.qhorus.api.channel.Channel;
 import io.casehub.qhorus.api.store.CrossTenantChannelStore;
@@ -40,6 +41,7 @@ import io.casehub.qhorus.api.store.CrossTenantChannelStore;
  * See openclaw#41 spec §2 and auth-retrofit-readiness.md protocol.
  */
 @PermitAll
+@HandWrittenEndpoint("delivery callback endpoint")
 @Path("/openclaw/delivery/channel")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
