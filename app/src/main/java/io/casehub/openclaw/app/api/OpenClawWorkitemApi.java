@@ -9,7 +9,7 @@ import io.quarkiverse.mcp.server.ToolResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-@McpDomain(value = "openclaw/workitems", app = "openclaw", basePath = "/api/openclaw/workitems")
+@McpDomain(value = "openclaw/workitems", app = "openclaw", basePath = "/api/openclaw/workitems", summary = "Contract-triggered work item lifecycle")
 @ApplicationScoped
 public class OpenClawWorkitemApi {
 

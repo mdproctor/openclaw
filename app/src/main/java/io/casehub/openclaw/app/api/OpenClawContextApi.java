@@ -9,7 +9,7 @@ import io.casehub.platform.api.mcp.RestPath;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-@McpDomain(value = "openclaw/context", app = "openclaw", basePath = "/api/openclaw/context")
+@McpDomain(value = "openclaw/context", app = "openclaw", basePath = "/api/openclaw/context", summary = "Contract execution context management")
 @ApplicationScoped
 public class OpenClawContextApi {
 

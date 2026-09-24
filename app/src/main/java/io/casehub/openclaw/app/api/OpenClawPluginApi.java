@@ -25,7 +25,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-@McpDomain(value = "openclaw/plugin", app = "openclaw", basePath = "/api/openclaw/plugin")
+@McpDomain(value = "openclaw/plugin", app = "openclaw", basePath = "/api/openclaw/plugin", summary = "Open an auto-commit from a plugin; Close an auto-commit from a plugin; List open commitments for an agent")
 @ApplicationScoped
 @RolesAllowed("openclaw-plugin")
 public class OpenClawPluginApi {

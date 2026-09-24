@@ -12,7 +12,7 @@ import io.quarkiverse.mcp.server.ToolResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-@McpDomain(value = "openclaw/commitments", app = "openclaw", basePath = "/api/openclaw/commitments")
+@McpDomain(value = "openclaw/commitments", app = "openclaw", basePath = "/api/openclaw/commitments", summary = "Commitment lifecycle — create, fulfill, breach, compensate")
 @ApplicationScoped
 public class OpenClawCommitmentApi {
 
